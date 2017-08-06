@@ -30,18 +30,17 @@ RUN \
 
 # install radarr
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
-echo "deb http://download.mono-project.com/repo/ubuntu xenial main" | tee /etc/apt/sources.list.d/mono-official.list && \
-apt-get update && \
-apt-get install mono-devel -y \
-radarr_tag=$(curl -sX GET "https://api.github.com/repos/Radarr/Radarr/releases" \
-	| awk '/tag_name/{print $4;exit}' FS='[""]') && \
+    echo "deb http://download.mono-project.com/repo/debian wheezy main" | tee /etc/apt/sources.list.d/mono-xamarin.list && \
+    apt update && \
+    apt install -y mono-devel mediainfo sqlite3 libmono-cil-dev wget curl && \
+    apt-get -y autoremove && \
+    apt-get -y clean && \
+    cd /tmp && \
+    wget https://github.com/Radarr/Radarr/releases/download/v0.2.0.778/Radarr.develop.0.2.0.778.linux.tar.gz && \
  mkdir -p \
 	/opt/radarr && \
- curl -o \
- /tmp/radar.tar.gz -L \
-	"https://github.com/galli-leo/Radarr/releases/download/${radarr_tag}/Radarr.develop.${radarr_tag#v}.linux.tar.gz" && \
- tar ixzf \
- /tmp/radar.tar.gz -C \
+  tar ixzf \
+ /tmp/Radarr.develop.0.2.0.778.linux.tar.gz -C \
 	/opt/radarr --strip-components=1 && \	
 	
 # cleanup
