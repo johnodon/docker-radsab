@@ -1,4 +1,4 @@
-FROM lsiobase/mono
+FROM lsiobase/xenial
 MAINTAINER johnodon
 
 # set version label
@@ -30,7 +30,11 @@ RUN \
 
 # install radarr
 RUN \
- radarr_tag=$(curl -sX GET "https://api.github.com/repos/Radarr/Radarr/releases" \
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
+echo "deb http://download.mono-project.com/repo/ubuntu xenial main" | sudo tee /etc/apt/sources.list.d/mono-official.list && \
+sudo apt-get update && \
+sudo apt-get install mono-devel -y \
+radarr_tag=$(curl -sX GET "https://api.github.com/repos/Radarr/Radarr/releases" \
 	| awk '/tag_name/{print $4;exit}' FS='[""]') && \
  mkdir -p \
 	/opt/radarr && \
