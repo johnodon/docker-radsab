@@ -53,4 +53,4 @@ COPY root/ /
 
 # ports and volumes
 EXPOSE 8080 9090 7878
-VOLUME /configsab /configrad /downloads /incomplete-downloads /movies
+VOLUME /config /downloads /incomplete-downloads /movies
